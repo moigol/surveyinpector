@@ -1,0 +1,238 @@
+@charset "utf-8";
+/* Mo G Document */
+
+
+@media only screen and (max-width: 1024px) {
+	.header-top {
+		display: none;
+	}
+	.header-top-mobile {
+		display: block;
+		background-color: #f6f6f6;
+		padding: 10px 0;
+	}
+	.comparison-title h3 {
+	    font-size: 12px;
+	    line-height: 22px;
+	}
+}
+
+@media only screen and (max-width: 998px) {
+	.content-post-single a.head-title-single {
+		padding: 50px;
+	}
+	.footer-column h3 {
+		margin-right: 0;
+	}
+	.rating-info span {
+	    margin-right: 0px;
+	}
+}
+@media only screen and (max-width: 768px) {
+	.content-post-single a.head-title-single {
+		padding: 10px 20px;
+	}
+	.visit a.btn {
+	    padding: 5px 15px;
+	}
+	.visit a.btn span {
+	    font-size: 30px;
+	}
+	.comparison-title h3 {
+	    font-size: 16px;
+	    line-height: 20px;
+	}
+	.rating-info .content {
+	    padding-top: 0;
+	}
+	a.head-title-page h2 {
+	    font-size: 30px;
+	}
+	a.overview-title h2 {
+	    font-size: 37px;
+	}
+	.footer-column {
+		width: 50%;
+	}
+	.f-logo img {
+	    max-width: 200px;
+	    width: 100%;
+	}
+	.research-site {
+	    padding: 30px 20px;
+	}
+	.site-list h2 {
+	    font-size: 35px;
+	}
+	.overview-item-data {
+	    padding-right: 15px;
+	    padding-top: 30px;
+	}
+	.overview-title h2 {
+	    font-size: 30px;
+	    margin: 5px 0;
+	}
+	.overview-ratings span.ratings-total {
+	    padding: 10px 15px 5px;
+	    font-size: 30px;
+	    line-height: 30px;
+	}
+}
+@media only screen and (max-width: 767px) {
+	.overview .review {
+	    border-right: unset;
+	    padding-right: 0;
+	    border-bottom: 2px solid #ebebeb;
+	    margin-bottom: 15px;
+	}
+	.reviewed-item-image {
+	    max-width: 100% !important;
+	    max-height: 320px;
+	}
+	.reviewed-item-data.col-md-7 {
+	    float: none;
+	    margin: 30px auto;
+	    padding: 0;
+	}
+	.review-category-box {
+	    max-width: 165px;
+	    margin: 5px 5px 0 0;
+	    padding: 10px;
+	}
+	.review-category-box input {
+	    width: 45%;
+	}
+	.rating-info img.rating {
+	    display: none;
+	}
+	.content-post .post-info p {
+	    min-height: unset;
+	}
+	.mobile-hide {
+	    display: none;
+	}
+	.review-pagination .pagination a {
+	    padding: 2px 10px;
+	    font-size: unset;
+	}
+	.review-pagination .pagination a .svg-inline--fa {
+	    font-size: unset;
+	    color: #616161;
+	    margin: 5px 0;
+	}
+	img.overview-img {
+	    max-width: 320px;
+	    margin: 10px auto;
+	    height: 260px;
+	}
+}
+@media only screen and (max-width: 576px) {
+	.comments.col-md-10.col-sm-9 {
+	    max-width: 75%;
+	}
+	.review-image.col-md-2.col-sm-3 {
+	    max-width: 25%;
+	}
+	.research-site h1 {
+	    font-size: 30px;
+	    line-height: 35px;
+	}
+	.home-search-form input#s {
+	    padding: 15px 75px 15px 20px;
+	    font-size: unset;
+	}
+	.search-button, .home-search-form input#searchsubmit {
+	    width: 65px;
+	    height: 57px;
+	}
+	.home-search-form .fa-search {
+	    right: 8px;
+	    top: 6px;
+	}
+	.no-padding {
+	    padding: 0;
+	}
+	.date {
+	    display: none;
+	}
+	.quick-rate h5 {
+	    font-size: 16px;
+	}
+	.quick-rate img {
+	    max-width: 200px;
+	}
+}
+@media only screen and (max-width: 470px) {
+	.inspector-comments .wp-review-feedback .review-btn {
+		display: table;
+		max-width: 100px;
+		width: 100%;
+		margin: 5px !important;
+	}
+}
+@media only screen and (max-width: 420px) {
+	.mobile-searchicon {
+	    padding: 10px;
+	    margin: 2px 15px 2px 10px;
+	}
+	.mobile-menudiv {
+	    margin: 2px 0;
+	}
+	.logo a.mobile img {
+	    margin-top: 5px;
+	}
+	a.head-title-page h2 {
+	    font-size: 20px;
+	}
+	a.overview-title h2 {
+	    font-size: 37px;
+	}
+	.review-total-wrapper {
+	    padding: 20px 0 !important;
+	}
+	.reviewed-item-image {
+	    max-height: 200px;
+	}
+	ul.review-links {
+	    padding-top: 50px;
+	}
+	.user-review-area .wp-review-user-rating-star .svg-inline--fa, .user-review-area .review-result-wrapper .svg-inline--fa {
+	    font-size: 30px;
+	}
+	.comments.col-md-10.col-sm-9 {
+    max-width: 75%;
+	}
+	.review-image.col-md-2.col-sm-3 {
+	    max-width: 25%;
+	}
+	.review-image {
+	    padding: 0;
+	}
+	.inspector-comments {
+	    padding: 0;
+	}
+	.site-list h2 {
+	    font-size: 30px;
+	}
+	.review-pagination .pagination a {
+	    margin: 0 2px;
+	}
+}
+
+@media only screen and (max-width: 320px) {
+.user-review-area .wp-review-user-rating-star .svg-inline--fa, .user-review-area .review-result-wrapper .svg-inline--fa {
+    font-size: 25px;
+}
+h5.user-review-title {
+    line-height: 25px;
+}
+.user-total-wrapper {
+    margin-top: 5px;
+}
+.inspector-comments span {
+    display: block;
+}
+.site-list h2 {
+    font-size: 28px;
+}
+}
