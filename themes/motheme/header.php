@@ -146,17 +146,22 @@
                                 } elseif( is_page() ) {
                                 	echo '<a href="'. SITEURL .'">Home</a> <span><i class="fa fa-chevron-right"></i></span>';
                                     the_title();
-                                } elseif( is_single() ) {
-                                    $terms = get_the_terms( get_the_ID(), 'review-category' );
+                                } elseif( is_singular( 'blog' ) ) {
+                                    $terms = get_the_terms( get_the_ID(), 'blog-category' );
                                     echo '<a href="'. SITEURL .'">Home</a> <span><i class="fa fa-chevron-right"></i></span>';
-                                    echo '<a href="'. SITEURL .'/review-category/'.$terms[0]->slug.'">'.$terms[0]->name.'</a> <span><i class="fa fa-chevron-right"></i></span>';
-                                    the_title();
-                                } elseif( is_tax('review-category') ) { 
-                                    $c = get_query_var( 'review-category' );
-                                    $term = get_term_by('slug', $c, 'review-category');
+                                    echo '<a href="'. SITEURL .'/blog-category/'.$terms[0]->slug.'">'.$terms[0]->name.'</a> <span><i class="fa fa-chevron-right"></i></span>';
+                                    the_title(); 
+                                } elseif( is_single() ) {
+                                    $terms = get_the_terms( get_the_ID(), 'category' );
+                                    echo '<a href="'. SITEURL .'">Home</a> <span><i class="fa fa-chevron-right"></i></span>';
+                                    echo '<a href="'. SITEURL .'/'.$terms[0]->slug.'">'.$terms[0]->name.'</a> <span><i class="fa fa-chevron-right"></i></span>';
+                                    the_title();                                
+                                } elseif( is_tax('blog-category') ) { 
+                                    $c = get_query_var( 'blog-category' );
+                                    $term = get_term_by('slug', $c, 'blog-category');
                                     ?>
                                     <a href="<?php echo SITEURL; ?>">Home</a> <span><i class="fa fa-chevron-right"></i></span>
-                                    <a href="<?php echo SITEURL; ?>/reviews/">Review Category</a> <span><i class="fa fa-chevron-right"></i></span>
+                                    <a href="<?php echo SITEURL; ?>/blogs/">Blog Category</a> <span><i class="fa fa-chevron-right"></i></span>
                                     <?php echo $term->name; ?>
                                 <?php  
                                 } elseif( is_archive() ) { 
@@ -164,7 +169,7 @@
                                     $term = get_category( $c );
                                     ?>
                                     <a href="<?php echo SITEURL; ?>">Home</a> <span><i class="fa fa-chevron-right"></i></span>
-                                    <a href="<?php echo SITEURL; ?>/blog/">Category</a> <span><i class="fa fa-chevron-right"></i></span>
+                                    <a href="<?php echo SITEURL; ?>/reviews/">Reviews</a> <span><i class="fa fa-chevron-right"></i></span>
                                     <?php echo $term->name; ?>
                                 <?php }
                                 ?>

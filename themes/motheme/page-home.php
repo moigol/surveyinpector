@@ -14,13 +14,7 @@ get_header();
                         <div class="search-button">                                
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </div>
-                        <form role="search" method="get" id="searchform" class="searchform" action="/reviews/" _lpchecked="1">
-                            <div>
-                                <label class="screen-reader-text" for="s">Search for:</label>
-                                <input type="text" value="" name="search" placeholder="Search for site review or category" id="s">
-                                <input type="submit" id="searchsubmit" value="Search">
-                            </div>
-                        </form>
+                        <?php get_search_form(); ?>
                     </div>
                 </div>
             </div>
@@ -67,11 +61,11 @@ get_header();
                                             </div>
                                             <div class="categories">
                                             <?php 
-                                            $terms = get_the_terms( get_the_ID(), 'review-category' );
+                                            $terms = get_the_terms( get_the_ID(), 'category' );
                                             $cntr = 0;
                                             foreach($terms as $term) {
                                                 $cntr++;
-                                                echo '<a href="/review-category/'.$term->slug.'">'.$term->name.'</a>';
+                                                echo '<a href="/'.$term->slug.'">'.$term->name.'</a>';
                                                 echo $cntr < count($terms) ? ', ' : '';
                                             } ?>                                                
                                             </div>
@@ -133,11 +127,11 @@ get_header();
                                             </div>
                                             <div class="categories">
                                             <?php 
-                                            $terms = get_the_terms( get_the_ID(), 'review-category' );
+                                            $terms = get_the_terms( get_the_ID(), 'category' );
                                             $cntr = 0;
                                             foreach($terms as $term) {
                                                 $cntr++;
-                                                echo '<a href="/review-category/'.$term->slug.'">'.$term->name.'</a>';
+                                                echo '<a href="/'.$term->slug.'">'.$term->name.'</a>';
                                                 echo $cntr < count($terms) ? ', ' : '';
                                             } ?>                                             
                                             </div>
@@ -222,7 +216,7 @@ get_header();
                 'posts_per_page' => -1,
                 'tax_query' => array(
                     array(
-                        'taxonomy' => 'category',
+                        'taxonomy' => 'blog-category',
                         'terms' => 'how-to-guides',
                         'field' => 'slug',
                         'include_children' => true,
@@ -259,7 +253,7 @@ get_header();
         <div class="row">
             <div class="view-articles">
                 <!--a id="hloadMore" class="load-btn" href="/blog/">See more Smart Buyer Tips <i class="fas fa-angle-down"></i></a-->
-                <a class="load-btn" href="/category/how-to-guides/">See more Smart Buyer Tips <i class="fas fa-angle-down"></i></a>
+                <a class="load-btn" href="/blog-category/how-to-guides/">See more Smart Buyer Tips <i class="fas fa-angle-down"></i></a>
             </div>
         </div>
         <hr class="line" />

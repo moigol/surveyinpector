@@ -192,7 +192,6 @@ function mo_blogs_post() {
 		'description'           => __( 'Blog posts', 'motheme' ),
 		'labels'                => $labels,
 		'supports' 				=> array('title','editor','author','excerpt','comments','revisions'),
-		'taxonomies'            => array( 'category', 'post_tag' ),
 		'hierarchical'          => false,
 		'public'                => true,
 		'show_ui'               => true,
@@ -210,17 +209,17 @@ function mo_blogs_post() {
 	register_post_type( 'blog', $args );
 
 	$labels = array(
-		'name'              => _x( 'Review Categories', 'taxonomy general name', 'textdomain' ),
-		'singular_name'     => _x( 'Review Category', 'taxonomy singular name', 'textdomain' ),
-		'search_items'      => __( 'Search Review Categories', 'textdomain' ),
-		'all_items'         => __( 'All Review Categories', 'textdomain' ),
-		'parent_item'       => __( 'Parent Review Category', 'textdomain' ),
-		'parent_item_colon' => __( 'Parent Review Category:', 'textdomain' ),
-		'edit_item'         => __( 'Edit Review Category', 'textdomain' ),
-		'update_item'       => __( 'Update Review Category', 'textdomain' ),
-		'add_new_item'      => __( 'Add New Review Category', 'textdomain' ),
-		'new_item_name'     => __( 'New  Review Category Name', 'textdomain' ),
-		'menu_name'         => __( ' Review Category', 'textdomain' ),
+		'name'              => _x( 'Blog Categories', 'taxonomy general name', 'textdomain' ),
+		'singular_name'     => _x( 'Blog Category', 'taxonomy singular name', 'textdomain' ),
+		'search_items'      => __( 'Search Blog Categories', 'textdomain' ),
+		'all_items'         => __( 'All Blog Categories', 'textdomain' ),
+		'parent_item'       => __( 'Parent Blog Category', 'textdomain' ),
+		'parent_item_colon' => __( 'Parent Blog Category:', 'textdomain' ),
+		'edit_item'         => __( 'Edit Blog Category', 'textdomain' ),
+		'update_item'       => __( 'Update Blog Category', 'textdomain' ),
+		'add_new_item'      => __( 'Add New Blog Category', 'textdomain' ),
+		'new_item_name'     => __( 'New Blog Category Name', 'textdomain' ),
+		'menu_name'         => __( ' Blog Category', 'textdomain' ),
 	);
 
 	$args = array(
@@ -229,10 +228,10 @@ function mo_blogs_post() {
 		'show_ui'           => true,
 		'show_admin_column' => true,
 		'query_var'         => true,
-		'rewrite'           => array( 'slug' => 'review-category' ),
+		'rewrite'           => array( 'slug' => 'blog-category' ),
 	);
 
-	register_taxonomy( 'review-category', array( 'post' ), $args );
+	register_taxonomy( 'blog-category', array( 'blog' ), $args );
 
 	flush_rewrite_rules();
 }
@@ -240,7 +239,7 @@ add_action( 'init', 'mo_blogs_post', 0 );
 
 function mo_unregister_category_tags() {
     unregister_taxonomy_for_object_type( 'post_tag', 'post' );
-    unregister_taxonomy_for_object_type( 'category', 'post' );
+    //unregister_taxonomy_for_object_type( 'category', 'post' );
 }
 add_action( 'init', 'mo_unregister_category_tags' );
 
@@ -343,26 +342,7 @@ function default_comments_on( $data ) {
 }
 add_filter( 'wp_insert_post_data', 'default_comments_on' );
 
-function disable_emojis() {
-	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
-	remove_action( 'wp_print_styles', 'print_emoji_styles' );
-	remove_action( 'admin_print_styles', 'print_emoji_styles' );
-	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
-	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
-	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
-	add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
-}
-add_action( 'init', 'disable_emojis' );
-
-function disable_emojis_tinymce( $plugins ) {
-	if ( is_array( $plugins ) ) {
-	  	return array_diff( $plugins, array( 'wpemoji' ) );
-	} else {
-	  	return array();
-	}
-}
-
+// Add rating schema plugin - Aron's snippets
 function init_rating_schema($postID, $image, $title) {
 	global $wpdb;
 	$tablePrefix = $wpdb->prefix;
@@ -397,10 +377,133 @@ function init_rating_schema($postID, $image, $title) {
 	}
 }
 
+function disable_emojis() {
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );
+	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+	add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
+}
+add_action( 'init', 'disable_emojis' );
+
+function disable_emojis_tinymce( $plugins ) {
+	if ( is_array( $plugins ) ) {
+	  	return array_diff( $plugins, array( 'wpemoji' ) );
+	} else {
+	  	return array();
+	}
+}
+
+// Remove category from url plugin - Valerio Souza
+add_action( 'created_category', 'remove_category_url_refresh_rules' );
+add_action( 'delete_category',  'remove_category_url_refresh_rules' );
+add_action( 'edited_category',  'remove_category_url_refresh_rules' );
+add_action( 'init',             'remove_category_url_permastruct' );
+
+add_filter( 'category_rewrite_rules', 'remove_category_url_rewrite_rules' );
+add_filter( 'query_vars',             'remove_category_url_query_vars' );    // Adds 'category_redirect' query variable
+add_filter( 'request',                'remove_category_url_request' );       // Redirects if 'category_redirect' is set
+add_filter( 'plugin_row_meta', 		  'remove_category_url_plugin_row_meta', 10, 4 );
+
+function remove_category_url_refresh_rules() {
+	global $wp_rewrite;
+	$wp_rewrite->flush_rules();
+}
+
+function remove_category_url_deactivate() {
+	remove_filter( 'category_rewrite_rules', 'remove_category_url_rewrite_rules' ); // We don't want to insert our custom rules again
+	remove_category_url_refresh_rules();
+}
+
+// Removes category base.
+function remove_category_url_permastruct() {
+	global $wp_rewrite, $wp_version;
+
+	if ( 3.4 <= $wp_version ) {
+		$wp_rewrite->extra_permastructs['category']['struct'] = '%category%';
+	} else {
+		$wp_rewrite->extra_permastructs['category'][0] = '%category%';
+	}
+}
+
+// Adds our custom category rewrite rules.
+function remove_category_url_rewrite_rules( $category_rewrite ) {
+	global $wp_rewrite;
+
+	$category_rewrite = array();
+
+	/* WPML is present: temporary disable terms_clauses filter to get all categories for rewrite */
+	if ( class_exists( 'Sitepress' ) ) {
+		global $sitepress;
+
+		remove_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ) );
+		$categories = get_categories( array( 'hide_empty' => false, '_icl_show_all_langs' => true ) );
+		add_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ) );
+	} else {
+		$categories = get_categories( array( 'hide_empty' => false ) );
+	}
+
+	foreach ( $categories as $category ) {
+		$category_nicename = $category->slug;
+		if (  $category->parent == $category->cat_ID ) {
+			$category->parent = 0;
+		} elseif ( 0 != $category->parent ) {
+			$category_nicename = get_category_parents(  $category->parent, false, '/', true  ) . $category_nicename;
+		}
+		$category_rewrite[ '(' . $category_nicename . ')/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$' ] = 'index.php?category_name=$matches[1]&feed=$matches[2]';
+		$category_rewrite[ '(' . $category_nicename . ')/page/?([0-9]{1,})/?$' ] = 'index.php?category_name=$matches[1]&paged=$matches[2]';
+		$category_rewrite[ '(' . $category_nicename . ')/?$' ] = 'index.php?category_name=$matches[1]';
+	}
+
+	// Redirect support from Old Category Base
+	$old_category_base = get_option( 'category_base' ) ? get_option( 'category_base' ) : 'category';
+	$old_category_base = trim( $old_category_base, '/' );
+	$category_rewrite[ $old_category_base . '/(.*)$' ] = 'index.php?category_redirect=$matches[1]';
+
+	return $category_rewrite;
+}
+
+function remove_category_url_query_vars( $public_query_vars ) {
+	$public_query_vars[] = 'category_redirect';
+
+	return $public_query_vars;
+}
+
+// Handles category redirects.
+function remove_category_url_request( $query_vars ) {
+	if ( isset( $query_vars['category_redirect'] ) ) {
+		$catlink = trailingslashit( get_option( 'home' ) ) . user_trailingslashit( $query_vars['category_redirect'], 'category' );
+		status_header( 301 );
+		header( "Location: $catlink" );
+		exit;
+	}
+
+	return $query_vars;
+}
+
+function remove_category_url_plugin_row_meta( $links, $file ) {
+	if( plugin_basename( __FILE__ ) === $file ) {
+		$links[] = sprintf(
+			'<a target="_blank" href="%s">%s</a>',
+			esc_url('http://wordlab.com.br/donate/'),
+			__( 'Donate', 'remove_category_url' )
+		);
+	}
+	return $links;
+}
+
+// DB setter as we have no phpmyadmin access
 function set_posts_to_blog() {
 	global $wpdb;
 	$wpdb->query( "
-		UPDATE $wpdb->comments 
-		SET comment_karma = 1, comment_approved = 1" );
+		UPDATE $wpdb->term_taxonomy 
+		SET taxonomy = 'blog-category'
+		WHERE taxonomy = 'category';
+		UPDATE $wpdb->term_taxonomy 
+		SET taxonomy = 'category'
+		WHERE taxonomy = 'review-category';" );
 }
 //set_posts_to_blog();

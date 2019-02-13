@@ -18,7 +18,7 @@ $sortby = isset($_POST['sortby']) ? $_POST['sortby'] : "DESC";
                             $reviewcont = round( $userreview );
                             $schema     = get_post_meta( get_the_ID(), 'wp_review_schema_options', true );
                             $website    = $schema['WebSite'];
-                            $terms      = get_the_terms( get_the_ID(), 'review-category' );
+                            $terms      = get_the_terms( get_the_ID(), 'category' );
                             // args
                             $args = array(
                                 'post_id' => get_the_ID(),
