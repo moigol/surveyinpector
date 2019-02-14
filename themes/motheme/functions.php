@@ -494,16 +494,3 @@ function remove_category_url_plugin_row_meta( $links, $file ) {
 	}
 	return $links;
 }
-
-// DB setter as we have no phpmyadmin access
-function set_posts_to_blog() {
-	global $wpdb;
-	$wpdb->query( "
-		UPDATE $wpdb->term_taxonomy 
-		SET taxonomy = 'blog-category'
-		WHERE taxonomy = 'category';
-		UPDATE $wpdb->term_taxonomy 
-		SET taxonomy = 'category'
-		WHERE taxonomy = 'review-category';" );
-}
-//set_posts_to_blog();

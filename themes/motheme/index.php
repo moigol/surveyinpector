@@ -111,7 +111,7 @@ $the_query = new WP_Query( $args );
         </div>
         <div class="row">
             <div class="view-articles">
-                <a id="loadMore" class="load-btn" href="#">See Older Articles <i class="fas fa-angle-down"></i></a>
+                <a id="loadMore" class="load-btn" href="#">See Older Reviews <i class="fas fa-angle-down"></i></a>
             </div>
         </div>
         <hr class="line" />
